@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+		DOCKERHUB_CREDENTIALS=credentials('DOCKERHUB_LOGIN')
 	}
     stages {
         stage('Docker Login') {
@@ -13,7 +13,6 @@ pipeline {
         stage('Build & push Dockerfile') {
             steps {
                 sh """
-                cd DevOps-Pipeline-PHP/laravel-app
                 ansible-playbook playbook.yml
                 """
             }
@@ -21,7 +20,6 @@ pipeline {
         stage('Run Dockercompose playbook') {
             steps {
                 sh """
-                cd DevOps-Pipeline-PHP/laravel-app
                 ansible-playbook playbook-dcompose.yml 
                 """
             }
